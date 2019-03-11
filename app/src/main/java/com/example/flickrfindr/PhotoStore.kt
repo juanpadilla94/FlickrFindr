@@ -39,7 +39,6 @@ class PhotoStore : AsyncTask<String, Void, String>() {
             print("ERROR");
             e.printStackTrace()
         }
-        FeedPhotos(jsonResult);
-        return ""
+        return jsonResult
     }
 }
