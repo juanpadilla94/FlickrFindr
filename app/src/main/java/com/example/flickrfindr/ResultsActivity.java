@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+import java.util.LinkedHashMap;
 import java.util.concurrent.ExecutionException;
 
 public class ResultsActivity extends AppCompatActivity {
@@ -21,55 +23,41 @@ public class ResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
-
-        ImageView flickrImage = new ImageView(this);
-        Bitmap photoBitMap = null;
-        try {
-            photoBitMap = new BitMapFactory().execute("https://farm8.staticflickr.com/7830/32392551677_77d7c3e962_t.jpg").get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        flickrImage.setImageBitmap(photoBitMap);
-
+        LinkedHashMap<String, String> queryMap
+                = PhotoFactory.parsePhotos(getIntent().getStringExtra("query"));
         LinearLayout linearLay = (LinearLayout)findViewById(R.id.linearLayout);
-        CardView flickrCard = new CardView(this);
-        flickrCard.setMinimumHeight(750);
-        flickrCard.setCardBackgroundColor(Color.parseColor("#FF0000"));
-        flickrCard.addView(flickrImage);
-        linearLay.addView(flickrCard);
-
-        CardView secondCard = new CardView(this);
-        secondCard.setCardBackgroundColor(Color.parseColor("#002aff"));
-        secondCard.setMinimumHeight(750);
-        linearLay.addView(secondCard);
-
-        CardView thirdCard = new CardView(this);
-        thirdCard.setCardBackgroundColor(Color.parseColor("#FF0000"));
-        thirdCard.setMinimumHeight(750);
-        linearLay.addView(thirdCard);
-
-        CardView fourthCard = new CardView(this);
-        fourthCard.setCardBackgroundColor(Color.parseColor("#002aff"));
-        fourthCard.setMinimumHeight(750);
-        linearLay.addView(fourthCard);
-
-        /*
-        CardView card = (CardView) findViewById(R.id.cardView);
-        ImageView image = new ImageView(this);
-        Bitmap photoBitMap = null;
-        try {
-            photoBitMap = new BitMapFactory().execute("https://farm8.staticflickr.com/7830/32392551677_77d7c3e962_t.jpg").get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        boolean colorFlip = true;
+        for(String photoKey : queryMap.keySet()) {
+            // IMAGE
+            ImageView flickrImage = new ImageView(this);
+            Bitmap photoBitMap = null;
+            try {
+                photoBitMap = new BitMapFactory().execute(queryMap.get(photoKey)).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            flickrImage.setImageBitmap(photoBitMap);
+            flickrImage.setMinimumHeight(200);
+            flickrImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    
+                }
+            });
+            // TITLE
+            TextView photoTitle = new TextView(this);
+            photoTitle.setText(photoKey);
+            CardView photoCard = new CardView(this);
+            photoCard.setMinimumHeight(200);
+            photoCard.setCardBackgroundColor(Color.parseColor("#FF0000"));
+            if(colorFlip) photoCard.setCardBackgroundColor(Color.parseColor("#002aff"));
+            colorFlip = !colorFlip;
+            photoCard.addView(flickrImage);
+            photoCard.addView(photoTitle);
+            linearLay.addView(photoCard);
         }
-        image.setImageBitmap(photoBitMap);
-        card.addView(image);
-        //card.setOnClickListener(cardListener);
-        */
     }
 
     // Create an anonymous implementation of OnClickListener

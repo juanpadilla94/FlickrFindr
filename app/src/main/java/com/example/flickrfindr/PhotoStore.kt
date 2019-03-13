@@ -15,11 +15,11 @@ class PhotoStore : AsyncTask<String, Void, String>() {
         val REQUEST = "GET"
     }
 
-    override fun doInBackground(vararg params: String): String {
+    override fun doInBackground(vararg query: String): String {
         var jsonResult = ""
         var input: String?
         try {
-            val searchURL = URL(params[0])
+            val searchURL = URL(query[0])
             val httpConnection = searchURL.openConnection() as HttpURLConnection
             // SEND REQ AND CONNECT
             httpConnection.requestMethod = REQUEST;

@@ -18,13 +18,13 @@ public class BitMapFactory extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(String... strings) {
         try {
-            URL url = new URL(strings[0]);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            URL photoUrl = new URL(strings[0]);
+            HttpURLConnection connection = (HttpURLConnection) photoUrl.openConnection();
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
+            Bitmap photoBitmap = BitmapFactory.decodeStream(input);
+            return photoBitmap;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
