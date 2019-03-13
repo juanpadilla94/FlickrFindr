@@ -27,4 +27,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="192dp"
+        android:layout_height="111dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="52dp"
+        android:text="Welcome to FlickrFindr!! '\n' '\n' Created by: Juan Padilla"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

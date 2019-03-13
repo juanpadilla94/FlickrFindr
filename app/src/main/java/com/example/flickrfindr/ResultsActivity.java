@@ -1,5 +1,6 @@
 package com.example.flickrfindr;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
@@ -29,41 +30,35 @@ public class ResultsActivity extends AppCompatActivity {
         boolean colorFlip = true;
         for(String photoKey : queryMap.keySet()) {
             // IMAGE
-            ImageView flickrImage = new ImageView(this);
-            Bitmap photoBitMap = null;
+            final ImageView flickrImage = new ImageView(this);
             try {
-                photoBitMap = new BitMapFactory().execute(queryMap.get(photoKey)).get();
+                final Bitmap photoBitMap = new BitMapFactory().execute(queryMap.get(photoKey)).get();
+                flickrImage.setImageBitmap(photoBitMap);
+                flickrImage.setMinimumHeight(200);
+                flickrImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent photoIntent = new Intent(ResultsActivity.this, PhotoActivity.class);
+                        photoIntent.putExtra("photo", photoBitMap);
+                        startActivity(photoIntent);
+                    }
+                });
+                // TITLE
+                TextView photoTitle = new TextView(this);
+                photoTitle.setText(photoKey);
+                CardView photoCard = new CardView(this);
+                photoCard.setMinimumHeight(200);
+                photoCard.setCardBackgroundColor(Color.parseColor("#FF0000"));
+                if(colorFlip) photoCard.setCardBackgroundColor(Color.parseColor("#002aff"));
+                colorFlip = !colorFlip;
+                photoCard.addView(flickrImage);
+                photoCard.addView(photoTitle);
+                linearLay.addView(photoCard);
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            flickrImage.setImageBitmap(photoBitMap);
-            flickrImage.setMinimumHeight(200);
-            flickrImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    
-                }
-            });
-            // TITLE
-            TextView photoTitle = new TextView(this);
-            photoTitle.setText(photoKey);
-            CardView photoCard = new CardView(this);
-            photoCard.setMinimumHeight(200);
-            photoCard.setCardBackgroundColor(Color.parseColor("#FF0000"));
-            if(colorFlip) photoCard.setCardBackgroundColor(Color.parseColor("#002aff"));
-            colorFlip = !colorFlip;
-            photoCard.addView(flickrImage);
-            photoCard.addView(photoTitle);
-            linearLay.addView(photoCard);
         }
     }
-
-    // Create an anonymous implementation of OnClickListener
-    private View.OnClickListener cardListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            System.out.println("CLICKED CARD");
-        }
-    };
 }
