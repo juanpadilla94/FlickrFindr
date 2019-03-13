@@ -1,5 +1,6 @@
 package com.example.flickrfindr;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         apiKey = "1508443e49213ff84d566777dc211f2a";
         String searchWord = "cr7";
         url = "https://api.flickr.com/services/rest/?method=flickr.photos.search" +
@@ -43,5 +46,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Intent myIntent = new Intent(MainActivity.this, ResultsActivity.class);
+        startActivity(myIntent);
     }
 }
