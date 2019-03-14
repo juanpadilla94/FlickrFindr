@@ -13,7 +13,7 @@
         android:layout_marginTop="252dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Search"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,9 +32,9 @@
         android:id="@+id/textView"
         android:layout_width="192dp"
         android:layout_height="111dp"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="52dp"
-        android:text="Welcome to FlickrFindr!! '\n' '\n' Created by: Juan Padilla"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="76dp"
+        android:text="Welcome to FlickrFindr!! \n \n Created by: Juan Padilla"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

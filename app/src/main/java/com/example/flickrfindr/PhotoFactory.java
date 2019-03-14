@@ -23,14 +23,12 @@ public class PhotoFactory {
             String jsonPhotos = new JSONObject(jsonGetResult).get("photos").toString();
             String jsonPhoto = new JSONObject(jsonPhotos).get("photo").toString();
             JSONArray jsonArr = new JSONArray(jsonPhoto);
-            System.out.println(jsonArr.length());
             for(int i = 0; i < jsonArr.length(); i++) {
-                //"https://farm8.staticflickr.com/7830/32392551677_77d7c3e962_t.jpg";
                 JSONObject jsonHolder = new JSONObject(jsonArr.get(i).toString());
                 String flickrUrl = "https://farm";
                 flickrUrl += jsonHolder.get("farm") + ".staticflickr.com/";
                 flickrUrl += jsonHolder.get("server") + "/";
-                flickrUrl += jsonHolder.get("id") + "_" + jsonHolder.get("secret") + "_t.jpg";
+                flickrUrl += jsonHolder.get("id") + "_" + jsonHolder.get("secret") + "_m.jpg";
                 urlMap.put(jsonHolder.get("title").toString() + "_" + i, flickrUrl);
             }
         } catch (ExecutionException e) {
@@ -40,7 +38,6 @@ public class PhotoFactory {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.println("urlMapSize: " + urlMap.size());
         return urlMap;
     }
 

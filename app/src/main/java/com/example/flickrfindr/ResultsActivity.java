@@ -43,16 +43,30 @@ public class ResultsActivity extends AppCompatActivity {
                         startActivity(photoIntent);
                     }
                 });
-                // TITLE
                 TextView photoTitle = new TextView(this);
                 photoTitle.setText(photoKey);
+                photoTitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent photoIntent = new Intent(ResultsActivity.this, PhotoActivity.class);
+                        photoIntent.putExtra("photo", photoBitMap);
+                        startActivity(photoIntent);
+                    }
+                });
                 CardView photoCard = new CardView(this);
                 photoCard.setMinimumHeight(200);
-                photoCard.setCardBackgroundColor(Color.parseColor("#FF0000"));
-                if(colorFlip) photoCard.setCardBackgroundColor(Color.parseColor("#002aff"));
+                if(colorFlip) {
+                    photoCard.setCardBackgroundColor(Color.parseColor("#FFFFA727"));
+                    photoTitle.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+                else {
+                    photoCard.setCardBackgroundColor(Color.parseColor("#ffffff"));
+                    photoTitle.setTextColor(Color.parseColor("#000000"));
+                }
                 colorFlip = !colorFlip;
-                photoCard.addView(flickrImage);
+                photoCard.addView(flickrImage, new ViewGroup.LayoutParams(250, ViewGroup.LayoutParams.MATCH_PARENT));
                 photoCard.addView(photoTitle);
+                photoTitle.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
                 linearLay.addView(photoCard);
             } catch (ExecutionException e) {
                 e.printStackTrace();
