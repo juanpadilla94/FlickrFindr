@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button searchButton = (Button)findViewById(R.id.search_button);
+        // Makes Query Req and shows results
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

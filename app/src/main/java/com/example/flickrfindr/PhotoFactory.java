@@ -15,8 +15,11 @@ public class PhotoFactory {
                 "&text=" + searchQuery +
                 "&per_page=25" +
                 "&format=json&nojsoncallback=1";
+        // Key: Title of Photo; Value: URL for photo
         LinkedHashMap<String, String> urlMap = new LinkedHashMap<>();
+        // REQ for JSON Data of all photos
         try {
+            // Parse JSON data
             String jsonGetResult = new PhotoStore().execute(url).get();
             String jsonPhotos = new JSONObject(jsonGetResult).get("photos").toString();
             String jsonPhoto = new JSONObject(jsonPhotos).get("photo").toString();

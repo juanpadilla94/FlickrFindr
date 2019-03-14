@@ -10,7 +10,7 @@ import java.net.URL
 
 
 class PhotoStore : AsyncTask<String, Void, String>() {
-
+    // Returns JSON Data from GET Request
     override fun doInBackground(vararg query: String): String {
         var jsonResult = ""
         var input: String?

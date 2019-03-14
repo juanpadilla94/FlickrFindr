@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 
+// Shows Full-Size Version of Photo that was selected on previous screen
 class PhotoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +22,7 @@ class PhotoActivity : AppCompatActivity() {
         flickrPhoto.setImageBitmap(bitMap)
         val frameLay = findViewById(R.id.frameLayout) as FrameLayout
         frameLay.addView(flickrPhoto)
+        // Main Menu Button
         val searchButton = findViewById<View>(R.id.search_button) as Button
         searchButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
@@ -28,6 +30,7 @@ class PhotoActivity : AppCompatActivity() {
                 startActivity(searchIntent)
             }
         })
+        // Takes you to results screen (has a bug)
         val resultsButton = findViewById(R.id.results_button) as Button
         resultsButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
