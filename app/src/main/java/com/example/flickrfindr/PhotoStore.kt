@@ -11,10 +11,6 @@ import java.net.URL
 
 class PhotoStore : AsyncTask<String, Void, String>() {
 
-    companion object {
-        val REQUEST = "GET"
-    }
-
     override fun doInBackground(vararg query: String): String {
         var jsonResult = ""
         var input: String?
@@ -22,7 +18,7 @@ class PhotoStore : AsyncTask<String, Void, String>() {
             val searchURL = URL(query[0])
             val httpConnection = searchURL.openConnection() as HttpURLConnection
             // SEND REQ AND CONNECT
-            httpConnection.requestMethod = REQUEST;
+            httpConnection.requestMethod = "GET";
             httpConnection.connect()
             val stream = InputStreamReader(httpConnection.inputStream)
             val buffReader = BufferedReader(stream as Reader?)

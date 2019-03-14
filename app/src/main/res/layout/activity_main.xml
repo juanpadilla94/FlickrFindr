@@ -34,6 +34,7 @@
         android:layout_height="111dp"
         android:layout_marginStart="96dp"
         android:layout_marginTop="76dp"
+        android:textColor="@color/cardview_dark_background"
         android:text="Welcome to FlickrFindr!! \n \n Created by: Juan Padilla"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

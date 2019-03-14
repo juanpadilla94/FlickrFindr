@@ -3,8 +3,6 @@ package com.example.flickrfindr;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ExecutionException;
 
@@ -17,7 +15,7 @@ public class PhotoFactory {
                 "&text=" + searchQuery +
                 "&per_page=25" +
                 "&format=json&nojsoncallback=1";
-        LinkedHashMap<String, String> urlMap = new LinkedHashMap<>(); // maps photo title to url query
+        LinkedHashMap<String, String> urlMap = new LinkedHashMap<>();
         try {
             String jsonGetResult = new PhotoStore().execute(url).get();
             String jsonPhotos = new JSONObject(jsonGetResult).get("photos").toString();
