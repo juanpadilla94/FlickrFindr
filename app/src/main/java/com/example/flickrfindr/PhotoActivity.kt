@@ -34,8 +34,9 @@ class PhotoActivity : AppCompatActivity() {
         val resultsButton = findViewById(R.id.results_button) as Button
         resultsButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
-                val searchIntent = Intent(this@PhotoActivity, ResultsActivity::class.java)
-                startActivity(searchIntent)
+                val resultsIntent = Intent(this@PhotoActivity, ResultsActivity::class.java)
+                resultsIntent.putExtra("query", intent.getStringExtra("query"))
+                startActivity(resultsIntent)
             }
         })
     }

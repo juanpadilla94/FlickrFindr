@@ -20,9 +20,10 @@ public class ResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+        String query = getIntent().getStringExtra("query");
         // key: Photo title : Value URL of Photo
         LinkedHashMap<String, String> queryMap
-                = PhotoFactory.parsePhotos(getIntent().getStringExtra("query"));
+                = PhotoFactory.parsePhotos(query);
         LinearLayout linearLay = (LinearLayout)findViewById(R.id.linearLayout);
         boolean colorFlip = true;
         // Iterate through all photos and allow full size photo when tapped on image/text
@@ -33,27 +34,9 @@ public class ResultsActivity extends AppCompatActivity {
                 final Bitmap photoBitMap = new BitMapFactory().execute(queryMap.get(photoKey)).get();
                 flickrImage.setImageBitmap(photoBitMap);
                 flickrImage.setMinimumHeight(200);
-                flickrImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent photoIntent =
-                                new Intent(ResultsActivity.this, PhotoActivity.class);
-                        photoIntent.putExtra("photo", photoBitMap);
-                        startActivity(photoIntent);
-                    }
-                });
                 // text: Shows full size photo when tapped
                 TextView photoTitle = new TextView(this);
                 photoTitle.setText(photoKey);
-                photoTitle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent photoIntent =
-                                new Intent(ResultsActivity.this, PhotoActivity.class);
-                        photoIntent.putExtra("photo", photoBitMap);
-                        startActivity(photoIntent);
-                    }
-                });
                 CardView photoCard = new CardView(this);
                 photoCard.setMinimumHeight(200);
                 // Changes color of card every other time
@@ -71,6 +54,20 @@ public class ResultsActivity extends AppCompatActivity {
                 photoCard.addView(photoTitle);
                 photoTitle.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
                 linearLay.addView(photoCard);
+                final Intent photoIntent =
+                        new Intent(ResultsActivity.this, PhotoActivity.class);
+                photoIntent.putExtra("query", query);
+                photoIntent.putExtra("photo", photoBitMap);
+                flickrImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) { startActivity(photoIntent);
+                    }
+                });
+                photoTitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) { startActivity(photoIntent);
+                    }
+                });
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
