@@ -1,11 +1,15 @@
 package com.example.flickrfindr;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,9 +27,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent searchIntent = new Intent(MainActivity.this, ResultsActivity.class);
                 EditText editQuery = (EditText)findViewById(R.id.edit_query);
+                searchIntent.putExtra("type", "search");
                 searchIntent.putExtra("query", editQuery.getText().toString());
                 startActivity(searchIntent);
             }
         });
+    }
+
+    public void onBookmarkClicked(View view) {
+        Intent searchIntent = new Intent(MainActivity.this, ResultsActivity.class);
+        searchIntent.putExtra("type", "bookmarkSearch");
+        startActivity(searchIntent);
     }
 }

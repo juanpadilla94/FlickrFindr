@@ -31,11 +31,29 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="192dp"
-        android:layout_height="111dp"
-        android:layout_marginStart="96dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="108dp"
         android:layout_marginTop="76dp"
-        android:textColor="@color/cardview_dark_background"
+        android:layout_marginBottom="444dp"
         android:text="Welcome to FlickrFindr!! \n \n Created by: Juan Padilla"
+        android:textAlignment="center"
+        android:textColor="@color/cardview_dark_background"
+        app:layout_constraintBottom_toTopOf="@+id/bookmarks_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/bookmarks_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="52dp"
+        android:onClick="onBookmarkClicked"
+        android:text="Bookmarks"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_button"
+        app:layout_constraintVertical_bias="0.921" />
 </android.support.constraint.ConstraintLayout>

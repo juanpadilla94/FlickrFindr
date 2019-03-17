@@ -30,7 +30,8 @@ public class PhotoFactory {
                 flickrUrl += jsonHolder.get("farm") + ".staticflickr.com/";
                 flickrUrl += jsonHolder.get("server") + "/";
                 flickrUrl += jsonHolder.get("id") + "_" + jsonHolder.get("secret") + "_m.jpg";
-                urlMap.put(jsonHolder.get("title").toString() + "_" + i, flickrUrl);
+                // key : url (assuming it will always be unique) value : title of photo (not unique)
+                urlMap.put(flickrUrl, jsonHolder.get("title").toString());
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
