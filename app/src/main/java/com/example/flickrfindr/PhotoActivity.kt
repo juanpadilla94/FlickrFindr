@@ -16,9 +16,11 @@ class PhotoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo)
-        val flickrPhoto = ImageView(this)
         val intent = intent
+        val photoTitle = findViewById<View>(R.id.photo_title) as TextView;
+        photoTitle.setText(intent.getStringExtra("title"));
         val bitMap = intent.getParcelableExtra<Parcelable>("photo") as Bitmap
+        val flickrPhoto = ImageView(this)
         flickrPhoto.setImageBitmap(bitMap)
         val frameLay = findViewById(R.id.frameLayout) as FrameLayout
         frameLay.addView(flickrPhoto)
