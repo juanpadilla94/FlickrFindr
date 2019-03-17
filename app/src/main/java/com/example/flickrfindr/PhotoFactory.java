@@ -8,12 +8,13 @@ import java.util.concurrent.ExecutionException;
 
 public class PhotoFactory {
 
-    static LinkedHashMap<String, String> parsePhotos(String searchQuery) {
+    static LinkedHashMap<String, String> parsePhotos(String searchQuery, int page) {
         String apiKey = "1508443e49213ff84d566777dc211f2a";
         String url = "https://api.flickr.com/services/rest/?method=flickr.photos.search" +
                 "&api_key=" + apiKey +
                 "&text=" + searchQuery +
                 "&per_page=25" +
+                "&page=" + String.valueOf(page) +
                 "&format=json&nojsoncallback=1";
         // Key: Title of Photo; Value: URL for photo
         LinkedHashMap<String, String> urlMap = new LinkedHashMap<>();

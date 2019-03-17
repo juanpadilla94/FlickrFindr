@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,9 +24,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent searchIntent = new Intent(MainActivity.this, ResultsActivity.class);
                 EditText editQuery = (EditText)findViewById(R.id.edit_query);
-                searchIntent.putExtra("type", "search");
-                searchIntent.putExtra("query", editQuery.getText().toString());
-                startActivity(searchIntent);
+                String query = editQuery.getText().toString();
+                if(query == null || query.trim().length() < 1) {
+                    Toast.makeText(MainActivity.this,
+                            "Please Enter Non-Empty Query (:", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    searchIntent.putExtra("type", "search");
+                    searchIntent.putExtra("query", query);
+                    searchIntent.putExtra("page", 1);
+                    startActivity(searchIntent);
+                }
             }
         });
     }

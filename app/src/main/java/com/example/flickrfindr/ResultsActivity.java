@@ -11,10 +11,10 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -23,11 +23,16 @@ import java.util.concurrent.ExecutionException;
 
 public class ResultsActivity extends AppCompatActivity {
 
+    private String type;
+    private String query;
+    private int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
-        showResults(getIntent().getStringExtra("type"));
+        type = getIntent().getStringExtra("type");
+        showResults();
         Button mainMenuButton = (Button)findViewById(R.id.main_menu_button);
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,13 +41,24 @@ public class ResultsActivity extends AppCompatActivity {
                 startActivity(mainMenuIntent);
             }
         });
+        Button prevPageButton = (Button) findViewById(R.id.prev_page_button);
+        Button nextPageButton = (Button) findViewById(R.id.next_page_button);
+        prevPageButton.setText("Page " + String.valueOf(page - 1));
+        nextPageButton.setText("Page " + String.valueOf(page + 1));
+        if(!"search".equals(type)) {
+            nextPageButton.setVisibility(View.GONE);
+            prevPageButton.setVisibility(View.GONE);
+        }
+        else if(page < 2) { prevPageButton.setVisibility(View.GONE); }
     }
 
-    private void showResults(String type) {
+    private void showResults() {
         // key: Photo title  value: URL of Photo
         LinkedHashMap<String, String> resultsMap;
         if("search".equals(type)) {
-            resultsMap = PhotoFactory.parsePhotos(getIntent().getStringExtra("query"));
+            query = getIntent().getStringExtra("query");
+            page = getIntent().getIntExtra("page", 1);
+            resultsMap = PhotoFactory.parsePhotos(query, page);
         }
         else {
             resultsMap = new LinkedHashMap<>();
@@ -79,14 +95,15 @@ public class ResultsActivity extends AppCompatActivity {
                 linearLay.addView(photoCard);
                 final Intent photoIntent =
                         new Intent(ResultsActivity.this, PhotoActivity.class);
+                photoIntent.putExtra("type", type);
+                photoIntent.putExtra("page", page);
                 photoIntent.putExtra("url", photoUrl);
                 photoIntent.putExtra("title", resultsMap.get(photoUrl));
-                photoIntent.putExtra("query", getIntent().getStringExtra("query"));
+                photoIntent.putExtra("query", query);
                 photoIntent.putExtra("photo", photoBitMap);
                 flickrImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        System.out.println("Cruz");
                         startActivity(photoIntent);
                     }
                 });
@@ -114,5 +131,21 @@ public class ResultsActivity extends AppCompatActivity {
             String photoTitle = bookmark.substring(endIndex);
             resultsMap.put(photoUrl, photoTitle);
         }
+    }
+
+    public void onNextClicked(View view) {
+        switch (view.getId()) {
+            case R.id.next_page_button:
+                page += 1;
+                break;
+            case R.id.prev_page_button:
+                page -= 1;
+                break;
+        }
+        Intent searchIntent = new Intent(ResultsActivity.this, ResultsActivity.class);
+        searchIntent.putExtra("type", type);
+        searchIntent.putExtra("query", query);
+        searchIntent.putExtra("page", page);
+        startActivity(searchIntent);
     }
 }

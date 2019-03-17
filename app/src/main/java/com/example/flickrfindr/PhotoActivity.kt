@@ -37,8 +37,14 @@ class PhotoActivity : AppCompatActivity() {
         resultsButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
                 val resultsIntent = Intent(this@PhotoActivity, ResultsActivity::class.java)
-                resultsIntent.putExtra("type", "search");
-                resultsIntent.putExtra("query", intent.getStringExtra("query"))
+                if("search" ==intent.getStringExtra("type")) {
+                    resultsIntent.putExtra("type", "search");
+                    resultsIntent.putExtra("query", intent.getStringExtra("query"))
+                    resultsIntent.putExtra("page", intent.getIntExtra("page", 1))
+                }
+                else {
+                    resultsIntent.putExtra("type", "bookmarkSearch");
+                }
                 startActivity(resultsIntent)
             }
         })
