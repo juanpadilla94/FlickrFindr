@@ -14,21 +14,19 @@ import android.widget.Toast;
 import java.util.Set;
 import java.util.TreeSet;
 
+// Main Menu where users can look up photos through queries or bookmarked photos
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences queriesStore;
-    Spinner queriesSpinner;
-    Set<String> queriesSet;
+    SharedPreferences queriesStore; // stores latest searches
+    Spinner queriesSpinner; // quick search spinner
+    Set<String> queriesSet; // quick search set
 
-    // PHOTOS WILL BE SEARCHED BY TEXT (WHICH CONTAIN TAGS;
-    // ALTHOUGH THEY CAN BE SEARCHED EXCLUSIVELY BY TAGS AMONG OTHER PARAMETERS
-    // https://www.flickr.com/services/api/flickr.photos.search.html
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button searchButton = (Button)findViewById(R.id.search_button);
-        quickSearchOptions();
+        quickSearchOptions(); // finds latest queries to present as quick options
         // Makes Query REQ and shows results
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent searchIntent = new Intent(MainActivity.this, ResultsActivity.class);
                 EditText editQuery = (EditText)findViewById(R.id.edit_query);
                 String query = editQuery.getText().toString();
-                // CHECK FOR NULL OR EMPTY VALUES
+                // Check for null or empty values
                 if((query == null
                         || query.trim().length() < 1)
                         && ((query = queriesSpinner.getSelectedItem().toString()) == null
@@ -54,14 +52,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
+    // Takes you to bookmarked photos
     public void onBookmarkClicked(View view) {
         Intent searchIntent = new Intent(MainActivity.this, ResultsActivity.class);
         searchIntent.putExtra("type", "bookmarkSearch");
         startActivity(searchIntent);
     }
-
+    // Presents quick search options
     public void quickSearchOptions() {
         queriesStore = this.getSharedPreferences("queriesStore", Context.MODE_PRIVATE);
         queriesSet = queriesStore.getStringSet("queries", new TreeSet<String>());

@@ -24,16 +24,14 @@ class PhotoActivity : AppCompatActivity() {
         flickrPhoto.setImageBitmap(bitMap)
         val frameLay = findViewById(R.id.frameLayout) as FrameLayout
         frameLay.addView(flickrPhoto)
-        // Takes you to main menu
-        val searchButton = findViewById<View>(R.id.search_button) as Button
+        val searchButton = findViewById<View>(R.id.search_button) as Button // Takes you to main menu
         searchButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
                 val searchIntent = Intent(this@PhotoActivity, MainActivity::class.java)
                 startActivity(searchIntent)
             }
         })
-        // Takes you to results screen
-        val resultsButton = findViewById(R.id.results_button) as Button
+        val resultsButton = findViewById(R.id.results_button) as Button // Takes you to results screen
         resultsButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
                 val resultsIntent = Intent(this@PhotoActivity, ResultsActivity::class.java)
@@ -49,7 +47,7 @@ class PhotoActivity : AppCompatActivity() {
             }
         })
     }
-
+    // User wants to bookmark photo
     fun onBookmarkClicked(view: View) {
         if(view is CheckBox) {
             val checked: Boolean = view.isChecked

@@ -8,7 +8,7 @@ import java.io.Reader
 import java.net.HttpURLConnection
 import java.net.URL
 
-
+// Gets JSON packets with 25 photos based on page number
 class PhotoStore : AsyncTask<String, Void, String>() {
     // Returns JSON Data from GET Request
     override fun doInBackground(vararg query: String): String {

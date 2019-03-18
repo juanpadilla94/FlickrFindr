@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ExecutionException;
 
+// Parses JSON results from PhotoStore.kt to individual photo URLs
 public class PhotoFactory {
 
     static LinkedHashMap<String, String> parsePhotos(String searchQuery, int page) {
@@ -16,11 +17,10 @@ public class PhotoFactory {
                 "&per_page=25" +
                 "&page=" + String.valueOf(page) +
                 "&format=json&nojsoncallback=1";
-        // Key: Title of Photo; Value: URL for photo
+        // key: photo title ; value: photo url
         LinkedHashMap<String, String> urlMap = new LinkedHashMap<>();
-        // REQ for JSON Data of all photos
+        // GET REQ for JSON Data of all individual photos
         try {
-            // Parse JSON data
             String jsonGetResult = new PhotoStore().execute(url).get();
             String jsonPhotos = new JSONObject(jsonGetResult).get("photos").toString();
             String jsonPhoto = new JSONObject(jsonPhotos).get("photo").toString();
@@ -31,7 +31,6 @@ public class PhotoFactory {
                 flickrUrl += jsonHolder.get("farm") + ".staticflickr.com/";
                 flickrUrl += jsonHolder.get("server") + "/";
                 flickrUrl += jsonHolder.get("id") + "_" + jsonHolder.get("secret") + "_m.jpg";
-                // key : url (assuming it will always be unique) value : title of photo (not unique)
                 urlMap.put(flickrUrl, jsonHolder.get("title").toString());
             }
         } catch (ExecutionException e) {

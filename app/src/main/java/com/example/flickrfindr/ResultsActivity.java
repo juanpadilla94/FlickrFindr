@@ -19,11 +19,12 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+// Shows 25 photos of any query search; can navigate pages to look at more photos
 public class ResultsActivity extends AppCompatActivity {
 
-    private String type;
-    private String query;
-    private int page = 1;
+    private String type; // what type of results: query or bookmark?
+    private String query; // word used if query
+    private int page = 1; // page # to look at if query
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +50,9 @@ public class ResultsActivity extends AppCompatActivity {
         }
         else if(page < 2) { prevPageButton.setVisibility(View.GONE); }
     }
-
+    // show photos in query search or bookmarked photos
     private void showResults() {
-        // key: Photo title  value: URL of Photo
+        // key: photo URL  value: photo Title
         LinkedHashMap<String, String> resultsMap;
         if("search".equals(type)) {
             query = getIntent().getStringExtra("query");
@@ -79,8 +80,7 @@ public class ResultsActivity extends AppCompatActivity {
                 photoTitle.setText(preTitle);
                 CardView photoCard = new CardView(this);
                 photoCard.setMinimumHeight(200);
-                // Changes color of card every other time
-                if(colorFlip = !colorFlip) {
+                if(colorFlip = !colorFlip) { // Changes color of card every other time
                     photoCard.setCardBackgroundColor(Color.parseColor("#FFFFA727"));
                     photoTitle.setTextColor(Color.parseColor("#FFFFFF"));
                 }
@@ -119,7 +119,7 @@ public class ResultsActivity extends AppCompatActivity {
             }
         }
     }
-
+    // User wants to look at bookmarked photos
     private void bookmarkResults(LinkedHashMap<String, String> resultsMap) {
         SharedPreferences bookmarkStore = this.getSharedPreferences(
                 "bookmarkStore", Context.MODE_PRIVATE);
@@ -132,7 +132,7 @@ public class ResultsActivity extends AppCompatActivity {
             resultsMap.put(photoUrl, photoTitle);
         }
     }
-
+    // Users pressed on next or prev page button
     public void onNextClicked(View view) {
         switch (view.getId()) {
             case R.id.next_page_button:
