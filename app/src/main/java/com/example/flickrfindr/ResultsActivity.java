@@ -74,7 +74,9 @@ public class ResultsActivity extends AppCompatActivity {
                 flickrImage.setMinimumHeight(200);
                 // text: Shows full size photo when tapped
                 TextView photoTitle = new TextView(this);
-                photoTitle.setText(resultsMap.get(photoUrl));
+                String preTitle = resultsMap.get(photoUrl);
+                if(preTitle.length() > 35) preTitle = preTitle.substring(0, 33); // shorten title
+                photoTitle.setText(preTitle);
                 CardView photoCard = new CardView(this);
                 photoCard.setMinimumHeight(200);
                 // Changes color of card every other time
