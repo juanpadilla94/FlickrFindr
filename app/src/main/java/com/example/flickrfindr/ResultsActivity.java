@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -65,7 +63,7 @@ public class ResultsActivity extends AppCompatActivity {
             bookmarkResults(resultsMap);
         }
         LinearLayout linearLay = (LinearLayout)findViewById(R.id.linearLayout);
-        boolean colorFlip = false;
+        boolean colorFlip = true;
         // Iterate through all photos and allow full size photo when tapped on image/text
         for(String photoUrl : resultsMap.keySet()) {
             final ImageView flickrImage = new ImageView(this);
@@ -122,8 +120,8 @@ public class ResultsActivity extends AppCompatActivity {
 
     private void bookmarkResults(LinkedHashMap<String, String> resultsMap) {
         SharedPreferences bookmarkStore = this.getSharedPreferences(
-                "bookmarkStore2", Context.MODE_PRIVATE);
-        Set<String> urlSet = bookmarkStore.getStringSet("bookmarks2", null);
+                "bookmarkStore", Context.MODE_PRIVATE);
+        Set<String> urlSet = bookmarkStore.getStringSet("bookmarks", null);
         if(urlSet == null) { urlSet = new HashSet<>(); }
         for(String bookmark : urlSet) {
             int endIndex = bookmark.indexOf(".jpg") + 5;

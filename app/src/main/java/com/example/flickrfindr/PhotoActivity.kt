@@ -55,12 +55,12 @@ class PhotoActivity : AppCompatActivity() {
             val checked: Boolean = view.isChecked
             if(checked) {
                 val bookmarkStore = this.getSharedPreferences(
-                        "bookmarkStore2", Context.MODE_PRIVATE)
-                var urlSet: MutableSet<String>? = bookmarkStore.getStringSet("bookmarks2", null)
+                        "bookmarkStore", Context.MODE_PRIVATE)
+                var urlSet: MutableSet<String>? = bookmarkStore.getStringSet("bookmarks", null)
                 if (urlSet == null) { urlSet = HashSet() }
                 urlSet.add(intent.getStringExtra("url")
                         + " " + intent.getStringExtra("title"))
-                bookmarkStore.edit().putStringSet("bookmarks2", urlSet).apply()
+                bookmarkStore.edit().putStringSet("bookmarks", urlSet).apply()
                 Toast.makeText(this, "Bookmarked Photo!", Toast.LENGTH_SHORT).show()
             }
         }
